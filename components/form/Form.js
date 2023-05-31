@@ -1,18 +1,58 @@
 import React from "react";
-import { View, Text, SafeAreaView, TextInput, Modal } from "react-native";
+import {
+  View,
+  Text,
+  SafeAreaView,
+  TextInput,
+  Modal,
+  Button,
+} from "react-native";
 import { styles } from "./styles";
+import { colors } from "../../constants/colors";
 
 const Form = ({ openFormModal, handleCloseFormModal }) => {
   return (
-    <View>
-      <Modal animationType="slide" visible={openFormModal}>
+    <Modal
+      style={styles.formModalWrapper}
+      animationType="slide"
+      visible={openFormModal}
+    >
+      <View style={styles.centeredView}>
         <Text style={styles.formTitle}>Add something</Text>
         <SafeAreaView style={styles.formWrapper}>
-          <TextInput style={styles.formInput} />
-          <TextInput style={styles.formInput} />
+          <Text style={styles.formLabel}>Full name</Text>
+          <TextInput
+            placeholder="Please enter your name..."
+            style={styles.formInput}
+          />
+          <Text style={styles.formLabel}>Location</Text>
+          <TextInput
+            placeholder="Please enter your location..."
+            style={styles.formInput}
+          />
+          <Text style={styles.formLabel}>Contact</Text>
+          <TextInput
+            placeholder="Please enter your contact..."
+            style={styles.formInput}
+          />
+          <Text style={styles.formLabel}>Details</Text>
+          <TextInput
+            placeholder="Please enter the details..."
+            style={styles.formInput}
+          />
         </SafeAreaView>
-      </Modal>
-    </View>
+        <View style={styles.buttonWrapper}>
+          <View style={styles.submitBtn}>
+            <Button color={colors.blue} title="Submit" />
+          </View>
+          <Button
+            onPress={handleCloseFormModal}
+            color={colors.black}
+            title="Cancel"
+          />
+        </View>
+      </View>
+    </Modal>
   );
 };
 
