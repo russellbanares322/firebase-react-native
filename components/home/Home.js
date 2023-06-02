@@ -3,6 +3,7 @@ import { View, Button } from "react-native";
 import { colors } from "../../constants/colors";
 import { styles } from "./styles";
 import Form from "../form/Form";
+import List from "../list/List";
 
 const Home = () => {
   const [openFormModal, setOpenFormModal] = useState(false);
@@ -25,6 +26,9 @@ const Home = () => {
           color={colors.blue}
           title="Add new data"
         />
+      </View>
+      <View style={styles.listContainer}>
+        <List />
       </View>
     </View>
   );

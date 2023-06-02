@@ -1,29 +1,15 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
-import { getStorage } from "firebase/storage";
-import { getAuth } from "firebase/auth";
-const {
-  API_KEY,
-  AUTH_DOMAIN,
-  DATABASE_URL,
-  PROJECT_ID,
-  STORAGE_BUCKET,
-  MESSAGING_ID,
-  API_ID,
-} = process.env;
 
 // Initialize Firebase
 const firebaseConfig = {
-  apiKey: API_KEY,
-  authDomain: AUTH_DOMAIN,
-  databaseURL: DATABASE_URL,
-  projectId: PROJECT_ID,
-  storageBucket: STORAGE_BUCKET,
-  messagingSenderId: MESSAGING_ID,
-  appId: API_ID,
+  apiKey: "AIzaSyDRKnl5E4M0zlBAQv54EGDCLm2dPnGpM6E",
+  databaseURL: "https://fir-crud-e0fd8-default-rtdb.firebaseio.com",
+  projectId: "fir-crud-e0fd8",
+  storageBucket: "fir-crud-e0fd8.appspot.com",
+  messagingSenderId: "628807091480",
+  appId: "1:628807091480:web:38b8aebbb8f8ffd890ca6d",
 };
 
 const app = initializeApp(firebaseConfig);
-export const auth = getAuth(app);
 export const db = getFirestore(app);
-export const storage = getStorage(app);
