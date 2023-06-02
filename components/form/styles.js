@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+import { colors } from "../../constants/colors";
 
 export const styles = StyleSheet.create({
   centeredView: {
@@ -14,12 +15,15 @@ export const styles = StyleSheet.create({
     textAlign: "center",
   },
   formInput: {
-    height: 40,
+    height: 45,
     margin: 7,
     borderWidth: 1,
     paddingHorizontal: 16,
     borderRadius: 3,
     paddingVertical: 8,
+  },
+  formInputFocused: {
+    borderColor: colors.blue,
   },
   buttonWrapper: {
     paddingVertical: 5,
