@@ -4,8 +4,14 @@ import { styles } from "./styles";
 
 const DisplayList = ({ name }) => {
   return (
-    <View style={styles.listCard}>
-      <Text>{name}</Text>
+    <View style={styles.listCardContainer}>
+      <View style={styles.listContent}>
+        <Text>{name}</Text>
+        <View style={styles.actionBtnWrapper}>
+          <Text>Up</Text>
+          <Text>Del</Text>
+        </View>
+      </View>
     </View>
   );
 };
