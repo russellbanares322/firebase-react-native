@@ -2,10 +2,6 @@ import { StyleSheet } from "react-native";
 import { colors } from "../../constants/colors";
 
 export const styles = StyleSheet.create({
-  centeredView: {
-    flex: 1,
-    justifyContent: "center",
-  },
   formModalWrapper: {
     paddingVertical: 3,
     paddingHorizontal: 5,
@@ -13,6 +9,7 @@ export const styles = StyleSheet.create({
   formTitle: {
     fontSize: 20,
     textAlign: "center",
+    marginBottom: 10,
   },
   formInput: {
     height: 45,

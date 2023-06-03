@@ -20,9 +20,12 @@ export const styles = StyleSheet.create({
     justifyContent: "space-between",
     flexDirection: "row",
   },
+  listName: {
+    fontSize: 18,
+  },
   actionBtnWrapper: {
     display: "flex",
     flexDirection: "row",
-    gap: 5,
+    gap: 10,
   },
 });

@@ -6,11 +6,17 @@ import {
   TextInput,
   Modal,
   Button,
+  ActivityIndicator,
+  ToastAndroid,
 } from "react-native";
 import { styles } from "./styles";
+import { globalStyles } from "../../global/globalStyles";
 import { colors } from "../../constants/colors";
+import { addDoc, collection } from "firebase/firestore";
+import { db } from "../../firebase/firebaseConfig";
 
 const Form = ({ openFormModal, handleCloseFormModal }) => {
+  const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     location: "",
@@ -18,8 +24,34 @@ const Form = ({ openFormModal, handleCloseFormModal }) => {
     details: "",
   });
 
+  const isFormDirty =
+    !formData.name ||
+    !formData.location ||
+    !formData.contact ||
+    !formData.details;
+
   const handleChange = (key, value) => {
     setFormData({ ...formData, [key]: value });
+  };
+
+  const handleAddData = async () => {
+    setIsLoading(true);
+    const dataRef = collection(db, "users");
+    try {
+      await addDoc(dataRef, {
+        ...formData,
+      });
+      handleCloseFormModal();
+      ToastAndroid.show(
+        `Successfully added ${formData.name}`,
+        ToastAndroid.SHORT,
+        ToastAndroid.CENTER
+      );
+      setIsLoading(false);
+    } catch (err) {
+      console.log(err);
+      setIsLoading(false);
+    }
   };
   return (
     <Modal
@@ -27,29 +59,44 @@ const Form = ({ openFormModal, handleCloseFormModal }) => {
       animationType="slide"
       visible={openFormModal}
     >
-      <Text>{JSON.stringify(formData)}</Text>
-      <View style={styles.centeredView}>
+      <ActivityIndicator
+        color={colors.blue}
+        animating={isLoading}
+        size={50}
+        style={styles.spinner}
+      />
+      <View
+        style={[globalStyles.centeredView, isLoading && globalStyles.opacity]}
+      >
         <Text style={styles.formTitle}>Add something</Text>
         <SafeAreaView style={styles.formWrapper}>
-          <Text style={styles.formLabel}>Full name</Text>
+          <Text style={styles.formLabel}>
+            Full name <Text style={globalStyles.required}>*</Text>
+          </Text>
           <TextInput
             onChangeText={(text) => handleChange("name", text)}
             placeholder="Please enter your name..."
             style={styles.formInput}
           />
-          <Text style={styles.formLabel}>Location</Text>
+          <Text style={styles.formLabel}>
+            Location <Text style={globalStyles.required}>*</Text>
+          </Text>
           <TextInput
             onChangeText={(text) => handleChange("location", text)}
             placeholder="Please enter your location..."
             style={styles.formInput}
           />
-          <Text style={styles.formLabel}>Contact</Text>
+          <Text style={styles.formLabel}>
+            Contact <Text style={globalStyles.required}>*</Text>
+          </Text>
           <TextInput
             onChangeText={(text) => handleChange("contact", text)}
             placeholder="Please enter your contact..."
             style={styles.formInput}
           />
-          <Text style={styles.formLabel}>Details</Text>
+          <Text style={styles.formLabel}>
+            Details <Text style={globalStyles.required}>*</Text>
+          </Text>
           <TextInput
             onChangeText={(text) => handleChange("details", text)}
             placeholder="Please enter the details..."
@@ -58,9 +105,15 @@ const Form = ({ openFormModal, handleCloseFormModal }) => {
         </SafeAreaView>
         <View style={styles.buttonWrapper}>
           <View style={styles.submitBtn}>
-            <Button color={colors.blue} title="Submit" />
+            <Button
+              onPress={handleAddData}
+              disabled={isFormDirty}
+              color={colors.blue}
+              title="Submit"
+            />
           </View>
           <Button
+            disabled={isLoading}
             onPress={handleCloseFormModal}
             color={colors.black}
             title="Cancel"

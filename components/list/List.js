@@ -1,9 +1,8 @@
 import { collection, onSnapshot } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
-import { FlatList, SafeAreaView } from "react-native";
+import { FlatList } from "react-native";
 import { db } from "../../firebase/firebaseConfig";
 import DisplayList from "./DisplayList";
-import { styles } from "./styles";
 
 const List = () => {
   const [data, setData] = useState([]);
@@ -18,7 +17,7 @@ const List = () => {
         id: doc.id,
         ...doc.data(),
       }));
-      setData(fetchedData);
+      setData(fetchedData.reverse());
       setIsLoading(false);
     });
   };
