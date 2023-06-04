@@ -1,6 +1,11 @@
 import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
+  listParentWrapper: {
+    position: "relative",
+    flex: 1,
+    justifyContent: "center",
+  },
   listContainer: {
     height: "100%",
   },
@@ -27,5 +32,13 @@ export const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     gap: 10,
+  },
+  listSpinner: {
+    position: "absolute",
+    left: 0,
+    bottom: 0,
+    right: 0,
+    top: 0,
+    marginTop: 20,
   },
 });

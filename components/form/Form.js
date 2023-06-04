@@ -12,7 +12,7 @@ import {
 import { styles } from "./styles";
 import { globalStyles } from "../../global/globalStyles";
 import { colors } from "../../constants/colors";
-import { addDoc, collection } from "firebase/firestore";
+import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import { db } from "../../firebase/firebaseConfig";
 
 const Form = ({ openFormModal, handleCloseFormModal }) => {
@@ -40,6 +40,7 @@ const Form = ({ openFormModal, handleCloseFormModal }) => {
     try {
       await addDoc(dataRef, {
         ...formData,
+        timetamp: serverTimestamp(),
       });
       handleCloseFormModal();
       ToastAndroid.show(
@@ -63,7 +64,7 @@ const Form = ({ openFormModal, handleCloseFormModal }) => {
         color={colors.blue}
         animating={isLoading}
         size={50}
-        style={styles.spinner}
+        style={globalStyles.spinner}
       />
       <View
         style={[globalStyles.centeredView, isLoading && globalStyles.opacity]}
@@ -91,7 +92,8 @@ const Form = ({ openFormModal, handleCloseFormModal }) => {
           </Text>
           <TextInput
             onChangeText={(text) => handleChange("contact", text)}
-            placeholder="Please enter your contact..."
+            placeholder="Please enter your contact number..."
+            keyboardType="numeric"
             style={styles.formInput}
           />
           <Text style={styles.formLabel}>
@@ -107,7 +109,7 @@ const Form = ({ openFormModal, handleCloseFormModal }) => {
           <View style={styles.submitBtn}>
             <Button
               onPress={handleAddData}
-              disabled={isFormDirty}
+              disabled={isFormDirty || isLoading}
               color={colors.blue}
               title="Submit"
             />

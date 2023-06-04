@@ -1,7 +1,9 @@
-import { collection, onSnapshot } from "firebase/firestore";
+import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
-import { FlatList } from "react-native";
+import { ActivityIndicator, FlatList, View } from "react-native";
+import { colors } from "../../constants/colors";
 import { db } from "../../firebase/firebaseConfig";
+import { styles } from "../form/styles";
 import DisplayList from "./DisplayList";
 
 const List = () => {
@@ -10,14 +12,14 @@ const List = () => {
 
   const handleFetchData = () => {
     setIsLoading(true);
-
     const dataRef = collection(db, "users");
-    onSnapshot(dataRef, (snapshot) => {
+    const q = query(dataRef, orderBy("timestamp", "desc"));
+    onSnapshot(q, (snapshot) => {
       const fetchedData = snapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
       }));
-      setData(fetchedData.reverse());
+      setData(fetchedData);
       setIsLoading(false);
     });
   };
@@ -27,13 +29,24 @@ const List = () => {
   }, []);
 
   return (
-    <>
-      <FlatList
-        data={data}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => <DisplayList {...item} />}
-      />
-    </>
+    <View style={styles.listParentWrapper}>
+      {isLoading ? (
+        <ActivityIndicator
+          color={colors.blue}
+          animating={isLoading}
+          size={50}
+          style={styles.listSpinner}
+        />
+      ) : (
+        <FlatList
+          data={data}
+          keyExtractor={(item) => item.id}
+          renderItem={({ item }) => (
+            <DisplayList data={data} setData={setData} {...item} />
+          )}
+        />
+      )}
+    </View>
   );
 };
 
