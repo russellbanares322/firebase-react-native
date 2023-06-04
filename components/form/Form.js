@@ -40,7 +40,7 @@ const Form = ({ openFormModal, handleCloseFormModal }) => {
     try {
       await addDoc(dataRef, {
         ...formData,
-        timetamp: serverTimestamp(),
+        timestamp: serverTimestamp(),
       });
       handleCloseFormModal();
       ToastAndroid.show(
@@ -49,6 +49,12 @@ const Form = ({ openFormModal, handleCloseFormModal }) => {
         ToastAndroid.CENTER
       );
       setIsLoading(false);
+      setFormData({
+        name: "",
+        location: "",
+        contact: "",
+        details: "",
+      });
     } catch (err) {
       console.log(err);
       setIsLoading(false);
