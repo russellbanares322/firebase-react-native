@@ -7,9 +7,9 @@ export const styles = StyleSheet.create({
   },
   homeWrapper: {
     position: "absolute",
-    top: 670,
+    top: 650,
     backgroundColor: colors.blue,
-    height: "40%",
+    height: 100,
     width: "100%",
     display: "flex",
     justifyContent: "space-around",

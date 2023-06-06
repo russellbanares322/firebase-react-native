@@ -12,7 +12,7 @@ import {
 import { styles } from "./styles";
 import { globalStyles } from "../../global/globalStyles";
 import { colors } from "../../constants/colors";
-import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import { doc, serverTimestamp, updateDoc } from "firebase/firestore";
 import { db } from "../../firebase/firebaseConfig";
 
 const EditForm = ({ openEditModal, dataToEdit, handleCloseEditModal }) => {
@@ -44,17 +44,16 @@ const EditForm = ({ openEditModal, dataToEdit, handleCloseEditModal }) => {
     setFormData({ ...formData, [key]: value });
   };
 
-  const handleAddData = async () => {
+  const handleUpdateData = async () => {
     setIsLoading(true);
-    const dataRef = collection(db, "users");
     try {
-      await addDoc(dataRef, {
+      await updateDoc(doc(db, "users", dataToEdit.id), {
         ...formData,
         timestamp: serverTimestamp(),
       });
       handleCloseEditModal();
       ToastAndroid.show(
-        `Successfully added ${formData.name}`,
+        `Successfully updated ${formData.name}`,
         ToastAndroid.SHORT,
         ToastAndroid.CENTER
       );
@@ -85,7 +84,7 @@ const EditForm = ({ openEditModal, dataToEdit, handleCloseEditModal }) => {
       <View
         style={[globalStyles.centeredView, isLoading && globalStyles.opacity]}
       >
-        <Text style={styles.formTitle}>Add something</Text>
+        <Text style={styles.formTitle}>Update Data</Text>
         <SafeAreaView style={styles.formWrapper}>
           <Text style={styles.formLabel}>
             Full name <Text style={globalStyles.required}>*</Text>
@@ -128,17 +127,17 @@ const EditForm = ({ openEditModal, dataToEdit, handleCloseEditModal }) => {
         <View style={styles.buttonWrapper}>
           <View style={styles.submitBtn}>
             <Button
-              onPress={handleAddData}
+              onPress={handleUpdateData}
               disabled={isFormDirty || isLoading}
               color={colors.blue}
-              title="Submit"
+              title="Save"
             />
           </View>
           <Button
             disabled={isLoading}
             onPress={handleCloseEditModal}
             color={colors.black}
-            title="Cancel"
+            title="Discard"
           />
         </View>
       </View>
