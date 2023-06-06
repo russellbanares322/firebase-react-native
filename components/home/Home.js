@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { View, Button } from "react-native";
+import { View, TouchableOpacity } from "react-native";
 import { colors } from "../../constants/colors";
 import { styles } from "./styles";
 import Form from "../form/Form";
 import List from "../list/List";
+import Icon from "react-native-vector-icons/FontAwesome";
 
 const Home = () => {
   const [openFormModal, setOpenFormModal] = useState(false);
@@ -15,17 +16,24 @@ const Home = () => {
     setOpenFormModal(false);
   };
   return (
-    <View>
+    <View style={styles.container}>
       <Form
         handleCloseFormModal={handleCloseFormModal}
         openFormModal={openFormModal}
       />
       <View style={styles.homeWrapper}>
-        <Button
+        <TouchableOpacity style={styles.iconWrapper}>
+          <Icon name="home" size={30} color={colors.white} />
+        </TouchableOpacity>
+        <TouchableOpacity
           onPress={handleOpenFormModal}
-          color={colors.blue}
-          title="Add new data"
-        />
+          style={styles.iconWrapper}
+        >
+          <Icon name="plus" size={30} color={colors.white} />
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.iconWrapper}>
+          <Icon name="bell" size={30} color={colors.white} />
+        </TouchableOpacity>
       </View>
       <View style={styles.listContainer}>
         <List />

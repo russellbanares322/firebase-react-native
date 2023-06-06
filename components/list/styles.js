@@ -18,7 +18,8 @@ export const styles = StyleSheet.create({
     marginTop: 20,
     borderBottomWidth: 1,
     paddingVertical: 8,
-    paddingHorizontal: 5,
+    paddingHorizontal: 7,
+    marginHorizontal: 7,
   },
   listContent: {
     display: "flex",
